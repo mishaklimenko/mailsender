@@ -1,5 +1,4 @@
-package net.mailsender.util;
-
+package net.mailsender.util.impl;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,22 +9,26 @@ import javax.swing.ListModel;
 import net.mailsender.model.ExamMark;
 import net.mailsender.model.ExamMarkMask;
 import net.mailsender.model.Student;
+import net.mailsender.util.DataFilterUtil;
 
         //Для выведения оценок от 4 баллов
-public class DataFilter2Util {
+public class DataFilter2UtilImpl implements DataFilterUtil{
 ///
-            private int minBall = 75;
+   private int minBall = 75;
+
 
 	public int getMinBall() {
 		return minBall;
 	}
 
+
 	public void setMinBall(int maxBall) {
 		this.minBall = maxBall;
 	}
-///        
 ///
-        	public List<ExamMark> filterExamMarks2(List<ExamMark> exammarks){
+///
+        	@Override
+			public List<ExamMark> filterExamMarks(List<ExamMark> exammarks){
         List<ExamMark> filteredList = new ArrayList<ExamMark>();
 
         	boolean flag = true;
@@ -59,5 +62,5 @@ public class DataFilter2Util {
 
         return filteredList;
     }
-///        
+///
 }

@@ -18,9 +18,10 @@ import net.mailsender.dao.StudentDao;
 import net.mailsender.model.ExamMarkMask;
 import net.mailsender.model.Message;
 import net.mailsender.service.MessageGetterService;
-import net.mailsender.util.DataFilterUtil;
-import net.mailsender.util.DataFilter2Util;
 import net.mailsender.util.MessageGeneratorUtil;
+import net.mailsender.util.DataFilterUtil;
+import net.mailsender.util.impl.DataFilter2UtilImpl;
+import net.mailsender.util.impl.DataFilterUtilImpl;
 
 
 
@@ -51,7 +52,7 @@ public class MailSenderRunner {
 
         Properties connectionProps = new Properties();
         connectionProps.put("user", "root");
-        connectionProps.put("password", "ohdude1991");
+        connectionProps.put("password", "ghbdtnroot");
 
         Class.forName("com.mysql.jdbc.Driver");
         conn = DriverManager.getConnection(DB_URL, connectionProps);
@@ -92,8 +93,9 @@ public class MailSenderRunner {
 
 	    MessageGeneratorUtil mg = new MessageGeneratorUtil();
 
-	    DataFilterUtil df = new DataFilterUtil();
-	    			   df.setMaxBall(60);
+
+	    DataFilterUtil df = new DataFilterUtilImpl();
+
                                   // df.setMinBall(75);
 
         MessageGetterService mgs = new  MessageGetterService();
@@ -123,41 +125,6 @@ public class MailSenderRunner {
         	System.err.println(ex.getMessage());
         }
 ///1
-         StudentDao studentDao2 = new StudentDao();
-                   studentDao.setConn(conn);
-
-	 MessageGeneratorUtil mg2 = new MessageGeneratorUtil();
-
-	 DataFilter2Util df2 = new DataFilter2Util();
-                            df.setMinBall(75);
-        MessageGetterService mgs2 = new  MessageGetterService();
-        					 mgs2.setStudentDao(studentDao);
-        					 mgs2.setMessageGenerator(mg);
-        					 mgs2.setDataFilter2(df2);
-
-        List<Message> messages2 = mgs.getMessages2();
-
-
-        File outputFile2 = new File("MessagesText.txt");
-
-        try {
-            PrintWriter pw2 = new PrintWriter(outputFile);
-
-            pw2.println();
-
-            for(Message m : messages){
-            	pw2.println(m.getEmail());
-            	pw2.println(m.getMessage());
-            	//pw.flush();
-            	System.out.printf("[M2] %s%n", m);
-            }
-        	pw2.close();
-
-        }catch (IOException ex) {
-        	System.err.println(ex.getMessage());
-        }
-///1
-
 
 
         System.out.printf("%s%n", ExamMarkMask.MARK);

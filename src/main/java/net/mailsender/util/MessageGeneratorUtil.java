@@ -15,10 +15,14 @@ public class MessageGeneratorUtil {
 	public Message composeMessage(Student student, List<ExamMark> examMarks){
 		Message message = new Message();
 
+        System.out.println(student.getStudentId());
+        System.out.println(examMarks);
+
 		String messageBody = formatStudentData(student) + "\n"+ formatExamMarksData(examMarks);
 
 		message.setEmail(student.getEmailParent());
 		message.setMessage(messageBody);
+
 
 		return message;
     }
@@ -30,9 +34,9 @@ public class MessageGeneratorUtil {
 				student.getMiddLenam(),
 				student.getName()));
 
-		String finalText = templateText.replace("%token1%", student.getLastName())
-                                                .replace("%token2%", student.getName())
-                                                .replace("%token3%", student.getMiddLenam());
+		String finalText = templateText.replace("%token1%", (student.getLastName() != null) ? student.getLastName() : "" )
+                                                .replace("%token2%", (student.getName() != null) ? student.getLastName() : "" )
+                                                .replace("%token3%", (student.getMiddLenam() != null) ? student.getLastName() : "" );
 		//return sb.toString();
 		return finalText;
 	}
