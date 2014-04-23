@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="${webapp.name}" basedir="." default="help">
+<project name="MailSender" basedir="." default="help">
 	<description>Mail Sender application build file</description>
 
 
