@@ -10,8 +10,7 @@ public class MessageGeneratorUtil {
 	public String templateText = " Студент %token1% "
 								+ "%token2% "
 								+ "%token3%"
-                                                                +" имеет такие оценки "
-                                                                +"token4%";
+                                                                +" имеет такие оценки ";
 
 	public Message composeMessage(Student student, List<ExamMark> examMarks){
 		Message message = new Message();
@@ -41,8 +40,9 @@ public class MessageGeneratorUtil {
 	private String formatExamMarksData(List<ExamMark> examMarks){
                 StringBuilder sb = new StringBuilder();
                     for (ExamMark e : examMarks) {
-                        sb.append(String.format("Exammark :: %s %s %n", e.getSubject(),
-                                                                        e.getBall()));
+                        sb.append(String.format("Предмет :: %s %s по пятибальной системе %s %n", e.getSubject(),
+                                                                                e.getBall(),
+                                                                                e.getMark()));
                     }
 
 				//exammark.getName()));
