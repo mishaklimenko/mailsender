@@ -12,7 +12,7 @@ import net.mailsender.model.ExamMark;
 import net.mailsender.model.Student;
 
 public class StudentDao {
-	private static final String STUDENTS_SQL = "SELECT * FROM student where studentid=23362";
+	private static final String STUDENTS_SQL = "SELECT * FROM student";
 	private static final String STUDENT_EXAMMARKS_SQL = "SELECT * FROM exammark where STUDENTID=?";
 
 	private Connection conn = null;
