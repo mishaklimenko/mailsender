@@ -3,7 +3,7 @@
 	<description>Mail Sender application build file</description>
 
 
-<!-- Application  properties -->
+<!-- Application deafault properties -->
 	<property name="webapp.name" value="WebZergs"/>
 
 	<property name="src.dir" location="src/main/java"/>

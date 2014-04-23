@@ -9,6 +9,7 @@ import net.mailsender.model.ExamMark;
 import net.mailsender.model.Message;
 import net.mailsender.model.Student;
 import net.mailsender.util.DataFilterUtil;
+import net.mailsender.util.DataFilter2Util;
 import net.mailsender.util.MessageGeneratorUtil;
 
 public class MessageGetterService {
@@ -16,6 +17,7 @@ public class MessageGetterService {
 	private StudentDao studentDao;
 	private MessageGeneratorUtil messageGenerator;
 	private DataFilterUtil dataFilter;
+        private DataFilter2Util dataFilter2;
 
 	/**
 	 * @param studentDao the studentDao to set
@@ -44,6 +46,18 @@ public class MessageGetterService {
 	public void setDataFilter(DataFilterUtil dataFilter) {
 		this.dataFilter = dataFilter;
 	}
+///1
+        public DataFilter2Util getDataFilter2() {
+		return dataFilter2;
+	}
+
+	/**
+	 * @param dataFilter the dataFilter to set
+	 */
+	public void setDataFilter2(DataFilter2Util dataFilter) {
+		this.dataFilter2 = dataFilter;
+	}
+///1
 
 	public List<Message> getMessages() throws ClassNotFoundException, SQLException {
         List<Message> messages = new ArrayList<Message>();
@@ -65,4 +79,23 @@ public class MessageGetterService {
 		return messages;
 	}
 
+        	public List<Message> getMessages2() throws ClassNotFoundException, SQLException {
+        List<Message> messages = new ArrayList<Message>();
+
+        List<Student> students =  studentDao.getStudents();
+
+        students = dataFilter.filterEmptyEmailParent(students);
+
+        for(Student s : students){
+        	List<ExamMark> examMarks = studentDao.getStudentExamMarks(s.getStudentId());
+
+        	List<ExamMark> filteredExamMarks = dataFilter.filterExamMarks1(examMarks);
+
+
+        	Message message = messageGenerator.composeMessage(s, filteredExamMarks);
+        			messages.add(message);
+        }
+
+		return messages;
+	}
 }
