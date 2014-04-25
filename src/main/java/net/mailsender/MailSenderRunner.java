@@ -52,7 +52,7 @@ public class MailSenderRunner {
 
         Properties connectionProps = new Properties();
         connectionProps.put("user", "root");
-        connectionProps.put("password", "ohdude1991");
+        connectionProps.put("password", "ghbdtnroot");
 
         Class.forName("com.mysql.jdbc.Driver");
         conn = DriverManager.getConnection(DB_URL, connectionProps);
