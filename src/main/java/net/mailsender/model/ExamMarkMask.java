@@ -3,8 +3,9 @@ package net.mailsender.model;
 import java.util.HashSet;
 
 public class ExamMarkMask {
-	public static HashSet<String> MARK;
 	public static HashSet<String> BALL;
+
+	public static HashSet<String> MARK;
 	public static HashSet<String> ETSC;
 	public static HashSet<String> FORM;
 
@@ -12,24 +13,23 @@ public class ExamMarkMask {
 	public static HashSet<String> FREED_MARKS;
 
 	static {
+		BALL = new HashSet<String>();
+		for (int i=0; i<=100; i++) {
+			BALL.add(String.valueOf(i));
+		}
+
+		ETSC = new HashSet<String>();
+		ETSC.add("A");
+		ETSC.add("B");
+		ETSC.add("C");
+		ETSC.add("D");
+		ETSC.add("E");
+		ETSC.add("FX");
+		ETSC.add("F");
+
 		MARK = new HashSet<String>();
 		for (int i=0; i<=5; i++) {
 			MARK.add(String.valueOf(i));
-		}
-
-		BALL = new HashSet<String>();
-		BALL.add("A");
-		BALL.add("B");
-		BALL.add("C");
-		BALL.add("D");
-		BALL.add("E");
-		BALL.add("FX");
-		BALL.add("F");
-
-
-		ETSC = new HashSet<String>();
-		for (int i=0; i<=100; i++) {
-			ETSC.add(String.valueOf(i));
 		}
 
 

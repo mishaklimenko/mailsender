@@ -5,17 +5,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.mailsender.dao.StudentDao;
+import net.mailsender.filter.ExammarksFilter;
+import net.mailsender.filter.StudentsFilter;
 import net.mailsender.model.ExamMark;
 import net.mailsender.model.Message;
 import net.mailsender.model.Student;
 import net.mailsender.util.MessageGeneratorUtil;
-import net.mailsender.util.DataFilterUtil;
 
 public class MessageGetterService {
 
+	private boolean useLower = true;
+	private boolean useHigher = true;
+
 	private StudentDao studentDao;
 	private MessageGeneratorUtil messageGenerator;
-	private DataFilterUtil dataFilter;
+	private StudentsFilter studentFilter;
+	private ExammarksFilter exammarksFilter;
+
+
+
+	/**
+	 * @param useLower the useLower to set
+	 */
+	public void setUseLower(boolean useLower) {
+		this.useLower = useLower;
+	}
+
+	/**
+	 * @param useHigher the useHigher to set
+	 */
+	public void setUseHigher(boolean useHigher) {
+		this.useHigher = useHigher;
+	}
 
 	/**
 	 * @param studentDao the studentDao to set
@@ -32,32 +53,50 @@ public class MessageGetterService {
 	}
 
 	/**
-	 * @return the dataFilter
+	 * @return the studentFilter
 	 */
-	public DataFilterUtil getDataFilter() {
-		return dataFilter;
+	public StudentsFilter getStudentFilter() {
+		return studentFilter;
 	}
 
 	/**
-	 * @param dataFilter the dataFilter to set
+	 * @param studentFilter the studentFilter to set
 	 */
-	public void setDataFilter(DataFilterUtil dataFilter) {
-		this.dataFilter = dataFilter;
+	public void setStudentsFilter(StudentsFilter studentFilter) {
+		this.studentFilter = studentFilter;
+	}
+
+	/**
+	 * @return the exammarksFilter
+	 */
+	public ExammarksFilter getExammarksFilter() {
+		return exammarksFilter;
+	}
+
+	/**
+	 * @param exammarksFilter the exammarksFilter to set
+	 */
+	public void setExammarksFilter(ExammarksFilter exammarksFilter) {
+		this.exammarksFilter = exammarksFilter;
 	}
 
 	public List<Message> getMessages() throws ClassNotFoundException, SQLException {
+
         List<Message> messages = new ArrayList<Message>();
 
         List<Student> students = studentDao.getStudents();
-
-        //students = dataFilter.filterEmptyEmailParent(students);
+        	//отфильтровать всех студентов у которых отсутствует e-mail родителя
+        	students = studentFilter.filterStudents(students);
 
         for(Student s : students){
         	List<ExamMark> examMarks = studentDao.getStudentExamMarks(s.getStudentId());
 
-        		List<ExamMark> filteredExamMarks = dataFilter.filterExamMarks(examMarks);
+        		exammarksFilter.filterExamMarks(examMarks);
 
-        	Message message = messageGenerator.composeMessage(s, filteredExamMarks);
+        		List<ExamMark> lowerMarks = exammarksFilter.getLower();
+        		List<ExamMark> higherMarks = exammarksFilter.getHigher();
+
+         	Message message = messageGenerator.composeMessage(s, lowerMarks, higherMarks, useLower, useHigher);
         			messages.add(message);
         }
 
