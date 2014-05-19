@@ -15,16 +15,14 @@ import java.util.List;
 import java.util.Properties;
 
 import net.mailsender.dao.StudentDao;
+import net.mailsender.filter.ExammarksFilter;
+import net.mailsender.filter.StudentsFilter;
+import net.mailsender.filter.impl.ExamMarksFilterImpl;
+import net.mailsender.filter.impl.StudentsFilterImpl;
 import net.mailsender.model.ExamMarkMask;
 import net.mailsender.model.Message;
 import net.mailsender.service.MessageGetterService;
 import net.mailsender.util.MessageGeneratorUtil;
-import net.mailsender.util.DataFilterUtil;
-import net.mailsender.util.impl.DataFilter2UtilImpl;
-import net.mailsender.util.impl.DataFilterUtilImpl;
-
-
-
 
 public class MailSenderRunner {
 
@@ -91,17 +89,43 @@ public class MailSenderRunner {
         StudentDao studentDao = new StudentDao();
         		   studentDao.setConn(conn);
 
+
+        String dearParents = String.format("Уважаемые родители %n");
+
+		String studentMessageTemplate =   " студент/студентка "
+										+ " %token1% "
+										+ " %token2% "
+										+ " %token3% "
+                                        + " имеет такие оценки: ";
+		String badBoyGirl =
+				" студент/студентка "
+				+ " %token1% "
+				+ " %token2% "
+				+ " %token3% "
+                + " учится просто отвратительно: ";
+
+
+        Properties messageTemplates = new Properties();
+        			messageTemplates.setProperty("msg.student", dearParents);
+        			messageTemplates.setProperty("template.student", badBoyGirl);
+
 	    MessageGeneratorUtil mg = new MessageGeneratorUtil();
+	    					mg.setMessageTemplates(messageTemplates);
 
 
-	    DataFilterUtil df = new DataFilterUtilImpl();
-
-                                  // df.setMinBall(75);
+	    StudentsFilter sf = new StudentsFilterImpl();
+	    ExammarksFilter emf = new ExamMarksFilterImpl();
+	    				emf.setMinBall(50);
 
         MessageGetterService mgs = new  MessageGetterService();
         					 mgs.setStudentDao(studentDao);
         					 mgs.setMessageGenerator(mg);
-        					 mgs.setDataFilter(df);
+        					 mgs.setStudentsFilter(sf);
+        					 mgs.setExammarksFilter(emf);
+
+        					 mgs.setUseLower(true);
+        					 mgs.setUseHigher(false);
+
 
         List<Message> messages = mgs.getMessages();
 

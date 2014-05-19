@@ -4,13 +4,13 @@
  * and open the template in the editor.
  */
 
-package src.main.java.net.mailsender.util;
+package net.mailsender.filter;
 
 import java.util.List;
 
 import net.mailsender.model.ExamMark;
 import net.mailsender.model.Student;
 
-public interface StudentFilterUtil {
+public interface StudentsFilter {
     public List<Student> filterStudents(List<Student> students);
 }
