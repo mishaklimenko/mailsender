@@ -47,8 +47,8 @@ public class MessageGeneratorUtil {
 
 		finalTextString = finalTextString + messageTemplates.getProperty("template.student")
 				.replace("%token1%", (student.getLastName() != null) ? student.getLastName() : "" )
-                .replace("%token2%", (student.getName() != null) ? student.getLastName() : "" )
-                .replace("%token3%", (student.getMiddLenam() != null) ? student.getLastName() : "" );
+                                .replace("%token2%", (student.getName() != null) ? student.getName() : "" )
+                                .replace("%token3%", (student.getMiddLenam() != null) ? student.getMiddLenam() : "" );
 
 		return finalTextString;
 	}
